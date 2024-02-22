@@ -2,6 +2,30 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+typedef struct {
+    SDL_Rect rect;
+    SDL_Color color;
+    SDL_Scancode upKey;
+    SDL_Scancode downKey;
+    int speed;
+} Player;
+
+void drawPlayer(SDL_Renderer* renderer, Player* player) {
+    SDL_SetRenderDrawColor(renderer, player->color.r, player->color.g, player->color.b, player->color.a);
+    SDL_RenderFillRect(renderer, &player->rect);
+}
+
+void movePlayer(const Uint8* state, Player* player) {
+    printf("Player: %d, %d\n", player->rect.x, player->rect.y);
+    if (state[SDL_SCANCODE_W]) {
+        printf("Checking W\n");
+        player->rect.y -= player->speed;
+    }
+    if (state[SDL_SCANCODE_S]) {
+        player->rect.y += player->speed;
+    }
+}
+
 int main() {
     printf("Hello, SDL!\n");
 
@@ -28,26 +52,37 @@ int main() {
         return 1;
     }
 
-    SDL_Event e;
+    Player player1 = {{100, 100, 50, 50}, {255, 0, 0, 255}, SDL_SCANCODE_W, SDL_SCANCODE_S, 5};
+    Player player2 = {{200, 200, 50, 50}, {0, 255, 0, 255}, SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, 5};
+
+    SDL_Event event;
     bool quit = false;
     while (!quit){
-        while (SDL_PollEvent(&e)){
-            if (e.type == SDL_QUIT){
+        while (SDL_PollEvent(&event)){
+            if (event.type == SDL_QUIT){
                 quit = true;
             }
-            if (e.type == SDL_KEYDOWN){
+            if (event.type == SDL_KEYDOWN){
                 quit = true;
             }
-            if (e.type == SDL_MOUSEBUTTONDOWN){
+            if (event.type == SDL_MOUSEBUTTONDOWN){
                 quit = true;
             }
         }
 
-        // Set render color to blue
+        const Uint8 *state = SDL_GetKeyboardState(NULL);
+
+        // Set render color to white
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
         // Clear the window with the render color
         SDL_RenderClear(renderer);
+
+        drawPlayer(renderer, &player1);
+        drawPlayer(renderer, &player2);
+
+        movePlayer(state, &player1);
+        movePlayer(state, &player2);
         
         // Update the screen
         SDL_RenderPresent(renderer);

@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#define WINDOW_WIDTH 640
+#define WINDOW_HEIGHT 480
+
 typedef struct {
     SDL_Rect rect;
     SDL_Color color;
@@ -16,12 +19,10 @@ void drawPlayer(SDL_Renderer* renderer, Player* player) {
 }
 
 void movePlayer(const Uint8* state, Player* player) {
-    printf("Player: %d, %d\n", player->rect.x, player->rect.y);
-    if (state[SDL_SCANCODE_W]) {
-        printf("Checking W\n");
+    if (state[player->upKey] && player->rect.y > 0) {
         player->rect.y -= player->speed;
     }
-    if (state[SDL_SCANCODE_S]) {
+    if (state[player->downKey] && player->rect.y < WINDOW_HEIGHT - player->rect.h) {
         player->rect.y += player->speed;
     }
 }
@@ -36,7 +37,7 @@ int main() {
     }
 
     // Create a window
-    SDL_Window* window = SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    SDL_Window* window = SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == NULL) {
         fprintf(stderr, "SDL_CreateWindow Error: %s\n", SDL_GetError());
         SDL_Quit();
@@ -60,12 +61,6 @@ int main() {
     while (!quit){
         while (SDL_PollEvent(&event)){
             if (event.type == SDL_QUIT){
-                quit = true;
-            }
-            if (event.type == SDL_KEYDOWN){
-                quit = true;
-            }
-            if (event.type == SDL_MOUSEBUTTONDOWN){
                 quit = true;
             }
         }

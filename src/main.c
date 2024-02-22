@@ -1,6 +1,8 @@
 #include <SDL.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <stdbool.h>
 
 #include "config.h"
@@ -8,6 +10,9 @@
 #include "ball.h"
 
 int main() {
+    srand(time(NULL));
+    int rand_num = rand();
+
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL_Init Error: %s\n", SDL_GetError());
         return 1;
@@ -30,7 +35,7 @@ int main() {
 
     Player player1 = {{0, WINDOW_HEIGHT/2 - 120/2, 30, 120}, {255, 0, 0, 255}, SDL_SCANCODE_W, SDL_SCANCODE_S, 5};
     Player player2 = {{WINDOW_WIDTH - 30, WINDOW_HEIGHT/2 - 120/2, 30, 120}, {0, 255, 0, 255}, SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, 5};
-    Ball ball = {{WINDOW_WIDTH/2 - 10/2, WINDOW_HEIGHT/2 - 10/2, 10, 10}, {0, 0, 255, 255}, 5, 45};
+    Ball ball = {{WINDOW_WIDTH/2 - 10/2, WINDOW_HEIGHT/2 - 10/2, 10, 10}, {0, 0, 255, 255}, 50, 45};
 
     SDL_Event event;
     bool quit = false;
@@ -53,7 +58,10 @@ int main() {
 
         movePlayer(state, &player1);
         movePlayer(state, &player2);
-        moveBall(&ball);
+        moveBall(&ball, rand_num);
+        printf("Ball speed: %d\n", ball.speed);
+
+        checkCollisionBall(&ball, &player1.rect, &player2.rect, rand_num);
         
         SDL_RenderPresent(renderer);
     }

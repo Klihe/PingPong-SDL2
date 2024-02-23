@@ -33,9 +33,9 @@ int main() {
         return 1;
     }
 
-    Player player1 = {{0, WINDOW_HEIGHT/2 - 120/2, 30, 120}, {255, 0, 0, 255}, SDL_SCANCODE_W, SDL_SCANCODE_S, 5};
-    Player player2 = {{WINDOW_WIDTH - 30, WINDOW_HEIGHT/2 - 120/2, 30, 120}, {0, 255, 0, 255}, SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, 5};
-    Ball ball = {{WINDOW_WIDTH/2 - 10/2, WINDOW_HEIGHT/2 - 10/2, 10, 10}, {0, 0, 255, 255}, 50, 45};
+    Player player1 = {{0, WINDOW_HEIGHT/2 - 120/2, 30, 120}, {204, 49, 61, 255}, SDL_SCANCODE_W, SDL_SCANCODE_S, 5};
+    Player player2 = {{WINDOW_WIDTH - 30, WINDOW_HEIGHT/2 - 120/2, 30, 120}, {64, 142, 198, 255}, SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, 5};
+    Ball ball = {{WINDOW_WIDTH/2 - 15/2, WINDOW_HEIGHT/2 - 15/2, 15, 15}, {237, 242, 246, 255}, 50, 45};
 
     SDL_Event event;
     bool quit = false;
@@ -48,7 +48,7 @@ int main() {
 
         const Uint8 *state = SDL_GetKeyboardState(NULL);
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
 
         SDL_RenderClear(renderer);
 

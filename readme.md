@@ -25,13 +25,13 @@ make
 
 w - up  
 s - down  
-a - left
+a - left  
 d- right
 
 ### Player2
 
-arrow up - up
-arrow down - down
+arrow up - up  
+arrow down - down  
 arrow left - left  
 arrow right - right
 

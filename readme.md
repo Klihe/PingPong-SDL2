@@ -32,7 +32,7 @@ d- right
 
 arrow up - up
 arrow down - down
-arrow left - left
+arrow left - left  
 arrow right - right
 
 ## Support

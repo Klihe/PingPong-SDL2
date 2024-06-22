@@ -4,7 +4,8 @@ This is my first time working with SDL2 in C. For my first project, I chose to r
 
 ## Requirements
 
-- SDL2 installed with brew
+- SDL2 (installed with brew)
+- Makefile
 
 ## Install requirements
 
